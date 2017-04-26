@@ -6,10 +6,30 @@ app = Flask(__name__)
 # Connect to databases
 import sqlite3
 dataMartConn = sqlite3.connect('csc177_Final_Project.db')
-dataMartC = dataMartConn.cursor()
+dataMartCur = dataMartConn.cursor()
 
 allStudentsConn = sqlite3.connect('unionedStudents.db')
-allStudC = allStudentsConn.cursor()
+allStudCur = allStudentsConn.cursor()
+
+# columsn for gradeAvgStats to check
+statsColumns = [
+	"sex",
+	"traveltime",
+	"studytime",
+	"failures",
+	"schoolsup",
+	"famsup",
+	"activities",
+	"nursery",
+	"internet",
+	"romantic",
+	"famrel",
+	"freetime",
+	"goout",
+	"wAlc",
+	"health",
+	"absences"
+]
 
 def getMostOccuring(cur, grade, col):
 	cur.execute("""
@@ -29,27 +49,13 @@ def getMostOccuring(cur, grade, col):
 def hello():
     return "Hello World!"
 
-@app.route("/avgStatsFromGrade")
-def avgStatsFromGrade():
+@app.route("/gradeAvgStats")
+def gradeAvgStats():
 	grade = request.args.get('grade')
-	stats = {
-		"sex": getMostOccuring(allStudC, grade, "sex"),
-		"traveltime": getMostOccuring(allStudC, grade, "traveltime"),
-		"studytime": getMostOccuring(allStudC, grade, "studytime"),
-		"failures": getMostOccuring(allStudC, grade, "failures"),
-		"schoolsup": getMostOccuring(allStudC, grade, "schoolsup"),
-		"famsup": getMostOccuring(allStudC, grade, "famsup"),
-		"activities": getMostOccuring(allStudC, grade, "activities"),
-		"nursery": getMostOccuring(allStudC, grade, "nursery"),
-		"internet": getMostOccuring(allStudC, grade, "internet"),
-		"romantic": getMostOccuring(allStudC, grade, "romantic"),
-		"famrel": getMostOccuring(allStudC, grade, "famrel"),
-		"freetime": getMostOccuring(allStudC, grade, "freetime"),
-		"goout": getMostOccuring(allStudC, grade, "goout"),
-		"wAlc": getMostOccuring(allStudC, grade, "Walc"),
-		"health": getMostOccuring(allStudC, grade, "health"),
-		"absences": getMostOccuring(allStudC, grade, "absences")
-	}
+	stats = {}
+	for x in statsColumns:
+		stats[x] = getMostOccuring(allStudCur, grade, x)
+
 	print(stats)
 
 	return jsonify(stats)

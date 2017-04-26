@@ -25,7 +25,6 @@ portStud$romantic = factor(portStud$romantic, levels = c("yes", "no"), labels = 
 # Look at all students, not just those who take BOTH math and portugese
 # Do later
 unionStud <- merge(mathStud, portStud, 
-                   by=c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet", "guardian"), 
                   all = TRUE
             )
 

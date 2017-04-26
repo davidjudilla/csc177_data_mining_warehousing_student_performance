@@ -15,3 +15,11 @@ Web application made to view and explore discoveries.
 ## SQLite
 - Open SQLite and open the .db file in `/data_warehousing/csc177_Final_Project.db`
 - CSVs created by `student-merge.R` were used to populate the database
+
+## Server
+- `cd` into `/server`
+- Make sure you have virtualenv installed `pip install virtualenv`
+- Then run `. venv/bin/activate`
+	- `venv\Scripts\activate` if you're on Windows
+- Now run `pip install Flask`
+- Finally, `flask run`, and follow the link logged to console

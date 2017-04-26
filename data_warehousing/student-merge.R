@@ -1,7 +1,7 @@
 mathStud=read.table("student/student-mat.csv",sep=";",header=TRUE)
 portStud=read.table("student/student-por.csv",sep=";",header=TRUE)
 
-# Change labels of columns such as ("yes", "no") -> (1, 0)
+# Change/transform labels of columns such as ("yes", "no") -> (1, 0)
 #factor(select(mathStud, schoolsup:romantic), levels = c("yes", "no"), labels = c(1,0))
 mathStud$schoolsup = factor(mathStud$schoolsup, levels = c("yes", "no"), labels = c(1,0))
 mathStud$famsup = factor(mathStud$famsup, levels = c("yes", "no"), labels = c(1,0))

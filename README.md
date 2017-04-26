@@ -18,8 +18,9 @@ Web application made to view and explore discoveries.
 
 ## Server
 - `cd` into `/server`
-- Make sure you have virtualenv installed `pip install virtualenv`
+- Sidenote: Reference these links ([installation](http://flask.pocoo.org/docs/0.12/installation/#installation) + [quickstart](http://flask.pocoo.org/docs/0.12/quickstart/)) for help.
+- Make sure you have virtualenv installed `sudo pip install virtualenv`
 - Then run `. venv/bin/activate`
 	- `venv\Scripts\activate` if you're on Windows
-- Now run `pip install Flask`
+- Now run `sudo pip install Flask`
 - Finally, `flask run`, and follow the link logged to console

@@ -12,17 +12,16 @@ allStudentsConn = sqlite3.connect('unionedStudents.db')
 allStudC = allStudentsConn.cursor()
 
 def getMostOccuring(cur, grade, col):
-	t = (col, grade, col,)
 	cur.execute("""
-		SELECT ?
-		FROM Students 
-		WHERE G3 = ?
-		GROUP BY ?
+		SELECT {0}
+		FROM Students
+		WHERE G3 = {1}
+		GROUP BY {0}
 		ORDER BY COUNT(*) DESC
 		LIMIT 1
-	""", t)
+	""".format(col, grade))
 	# cur.execute('SELECT * FROM Students WHERE G3 = ?');
-	return cur.fetchone()
+	return cur.fetchone()[0]
 
 
 # Routes
@@ -33,7 +32,24 @@ def hello():
 @app.route("/avgStatsFromGrade")
 def avgStatsFromGrade():
 	grade = request.args.get('grade')
-	data = getMostOccuring(allStudC, grade, "famrel")
-	print(data)
+	stats = {
+		"sex": getMostOccuring(allStudC, grade, "sex"),
+		"traveltime": getMostOccuring(allStudC, grade, "traveltime"),
+		"studytime": getMostOccuring(allStudC, grade, "studytime"),
+		"failures": getMostOccuring(allStudC, grade, "failures"),
+		"schoolsup": getMostOccuring(allStudC, grade, "schoolsup"),
+		"famsup": getMostOccuring(allStudC, grade, "famsup"),
+		"activities": getMostOccuring(allStudC, grade, "activities"),
+		"nursery": getMostOccuring(allStudC, grade, "nursery"),
+		"internet": getMostOccuring(allStudC, grade, "internet"),
+		"romantic": getMostOccuring(allStudC, grade, "romantic"),
+		"famrel": getMostOccuring(allStudC, grade, "famrel"),
+		"freetime": getMostOccuring(allStudC, grade, "freetime"),
+		"goout": getMostOccuring(allStudC, grade, "goout"),
+		"wAlc": getMostOccuring(allStudC, grade, "Walc"),
+		"health": getMostOccuring(allStudC, grade, "health"),
+		"absences": getMostOccuring(allStudC, grade, "absences")
+	}
+	print(stats)
 
-	return jsonify(data)
+	return jsonify(stats)

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="studentPerformance">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Student Performance</title>
+  <link rel="stylesheet" href="style.css" />
+  <script data-require="angular.js@1.2.2" src="http://code.angularjs.org/1.2.2/angular.js" data-semver="1.2.2"></script>
+  <script data-require="d3@*" data-semver="3.3.11" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.3.11/d3.js"></script>
+  <script src="Chart.min.js"></script>
+  <script type="text/javascript" src="https://rawgit.com/chinmaymk/angular-charts/bower/dist/angular-charts.min.js"></script>
+  <script src="app.js"></script>
+</head>
+
+<body ng-controller="MainCtrl">
+  <div
+    data-ac-chart="'bar'"
+    data-ac-data="bartest"
+    data-ac-config="config"
+    class="bar-chart">
+  </div>
+</body>
+
+</html>

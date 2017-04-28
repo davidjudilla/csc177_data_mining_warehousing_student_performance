@@ -24,7 +24,7 @@ Web application made to view and explore discoveries.
 	- `venv\bin\activate.bat` if you're on Windows
 - Now run `sudo pip install Flask`
 - Run `export FLASK_APP=server.py`
-	- 'set FLASK_APP=server.py`
+	- `set FLASK_APP=server.py` if you're on Windows
 - Finally, `flask run`, and follow the link logged to console
 
 ## Endpoints

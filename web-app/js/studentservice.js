@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('studentPerformance')
-    .factory('DriverRidesService', function ($resource, ENV) {
-        var testapi = 'http://localhost:8080/';
+    .factory('AllStatsPerGrade', function ($resource, ENV) {
+        var testapi = 'http://localhost:5000/';
         var api = '';
-        return $resource(testapi + 'students/:id', {
-            id: '@id'
+        return $resource(ENV.testapi + 'gradeAvgStats/?grade=:grade', {
+            grade: '@grade'
         }, {
             get: {
                 method: 'GET',

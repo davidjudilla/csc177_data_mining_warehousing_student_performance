@@ -9,34 +9,48 @@
   <script data-require="d3@*" data-semver="3.3.11" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.3.11/d3.js"></script>
   <script src="js/Chart.min.js"></script>
   <script type="text/javascript" src="https://rawgit.com/chinmaymk/angular-charts/bower/dist/angular-charts.min.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/studentservice.js"></script>
   <!-- Bootstrap and JQuery -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
-<header align="center" style="background-color: cyan;">
+<header align="center">
     <h1 align="center">Student Life and Grade Correlation</h1>
-    <a ng-href="https://github.com/blh22buck">Bryce Hairabedian</a>
-    <a ng-href="https://github.com/davidjudilla">,&nbsp;David Judilla</a>
-    <a ng-href="https://github.com/justinmend">,&nbsp;Justin Mendiguarin</a>
+    <h4>
+        <a ng-href="https://github.com/blh22buck">Bryce Hairabedian</a>,&nbsp;
+        <a ng-href="https://github.com/davidjudilla">David Judilla</a>,&nbsp;
+        <a ng-href="https://github.com/justinmend">Justin Mendiguarin</a>
+    </h4>
 </header>
-
-
+<br>
 
 <body ng-controller="MainCtrl as ctrl">
 
     <!-- bar chart -->
     <div class="container-fluid" align="center" style="background-color: #f5f3f3;">
         <div class="row">
-
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="row-xs-4 row-sm-4 row-md-4 col-lg-4">
                 <h3>Bar Graph</h3>
+                <div class="form-group">
+                    <label for="dropdown1">
+                        This graph shows the *correlation* between the students grades averages.
+
+                    </label>
+                    <select name="dropdown1" id="dropdown1" class="form-control"
+                            ng-model="ctrl.dropdown1Selected">
+                        <option ng-repeat="tuple in ctrl.barGraphTuples" value="{{tuple}}">{{tuple}}</option>
+                    </select>
+                    <div
+                        ng-messages="rideRequestForm.numPassengers.$dirty && rideRequestForm.numPassengers.$error">
+                        <div class="input-error" ng-message="required">* required</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <div class="row-xs-4 row-sm-4 row-md-4 col-lg-4">
+
                 <div
                   data-ac-chart="'bar'"
                   data-ac-data="ctrl.barGraph"
@@ -49,22 +63,53 @@
     </div>
     <div class="container-fluid" align="center" style="background-color: #cfc;">
         <div class="row">
-
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <!--left/top-->
+            <div class="row-xs-4 row-sm-4 row-md-4 col-lg-4">
                 <h3>Bar Graph 2</h3>
-            </div>
+                <div class="form-group">
+                    <label for="dropdown1">
+                        This graph shows the *correlation* between the students grades averages.
 
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                <div
-                  data-ac-chart="'bar'"
-                  data-ac-data="ctrl.bartest"
-                  data-ac-config="ctrl.config"
-                  class="bar-chart">
+                    </label>
+                    <select name="dropdown1" id="dropdown1" class="form-control"
+                            ng-model="ctrl.dropdown1Selected">
+                        <option ng-repeat="tuple in ctrl.barGraphTuples" value="{{tuple}}">{{tuple}}</option>
+                    </select>
+                    <div
+                        ng-messages="rideRequestForm.numPassengers.$dirty && rideRequestForm.numPassengers.$error">
+                        <div class="input-error" ng-message="required">* required</div>
+                    </div>
                 </div>
+                <button class="btn btn-success" ng-click="ctrl.drawLineGraph()">Submit</button>
+            </div>
+            <!--right/bottom-->
+            <div class="row-xs-8 row-sm-8 row-md-8 col-lg-8">
+
+                    <div class="row  padding-0">
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 padding-0">
+                            <div class = "pull-right">Quick Float to right</div>
+                        </div>
+                        <div  ng-show="!ctrl.loadingGraph"
+                              class="col-xs-10 col-sm-10 col-md-10 col-lg-10 padding-0">
+                            <!--div
+                              data-ac-chart="'bar'"
+                              data-ac-data="ctrl.bartest"
+                              data-ac-config="ctrl.config"
+                              class="bar-chart">
+                          </div-->
+                          <div id="chart_div"></div>
+
+                        </div>
+
+                    </div>
 
             </div>
         </div>
     </div>
+
+
+    <script src="js/app.js"></script>
+    <script src="js/studentservice.js"></script>
 
 </body>
 

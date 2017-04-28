@@ -72,7 +72,11 @@ def getGradeToColAvg(curr, grade, col):
 # Routes
 @app.route("/")
 def hello():
-    return "Hello World!"
+    endpoints = {
+    	0 : "/gradeAvgStats?grade=X",
+    	1 : "/gradesToCol?col=X"
+    }
+    return jsonify(endpoints)
 
 @app.route("/gradeAvgStats")
 def gradeAvgStats():

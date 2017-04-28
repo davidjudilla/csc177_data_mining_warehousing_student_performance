@@ -10,15 +10,62 @@
   <script src="Chart.min.js"></script>
   <script type="text/javascript" src="https://rawgit.com/chinmaymk/angular-charts/bower/dist/angular-charts.min.js"></script>
   <script src="app.js"></script>
+  <script src="studentservice.js"></script>
+  <!-- Bootstrap and JQuery -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-<body ng-controller="MainCtrl">
-  <div
-    data-ac-chart="'bar'"
-    data-ac-data="bartest"
-    data-ac-config="config"
-    class="bar-chart">
-  </div>
+<header align="center" style="background-color: cyan;">
+    <h1 align="center">Student Life and Grade Correlation</h1>
+    <a ng-href="https://github.com/blh22buck">Bryce Hairabedian</a>
+    <a ng-href="https://github.com/davidjudilla">,&nbsp;David Judilla</a>
+    <a ng-href="https://github.com/justinmend">,&nbsp;Justin Mendiguarin</a>
+</header>
+
+
+
+<body ng-controller="MainCtrl as ctrl">
+
+    <!-- bar chart -->
+    <div class="container-fluid" align="center" style="background-color: #f5f3f3;">
+        <div class="row">
+
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <h3>Bar Graph</h3>
+            </div>
+
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                <div
+                  data-ac-chart="'bar'"
+                  data-ac-data="ctrl.barGraph"
+                  data-ac-config="ctrl.config"
+                  class="bar-chart">
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" align="center" style="background-color: #cfc;">
+        <div class="row">
+
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <h3>Bar Graph 2</h3>
+            </div>
+
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                <div
+                  data-ac-chart="'bar'"
+                  data-ac-data="ctrl.bartest"
+                  data-ac-config="ctrl.config"
+                  class="bar-chart">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

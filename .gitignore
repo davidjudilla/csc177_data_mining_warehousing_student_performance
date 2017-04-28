@@ -1,0 +1,5 @@
+.gitignore
+student/
+.DS_Store
+.RData
+.Rhistory

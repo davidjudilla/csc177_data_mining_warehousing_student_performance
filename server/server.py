@@ -44,8 +44,10 @@ def getMostOccuring(cur, grade, col):
 		ORDER BY COUNT(*) DESC
 		LIMIT 1
 	""".format(col, grade))
+	print(grade)
+	mostOccuring = cur.fetchone()
 	# cur.execute('SELECT * FROM Students WHERE G3 = ?');
-	return cur.fetchone()[0]
+	return mostOccuring[0] if mostOccuring != None else None
 
 def getAverageOfCol(cur, grade, col):
 	cur.execute("""
@@ -54,7 +56,17 @@ def getAverageOfCol(cur, grade, col):
 		WHERE G3 = {1}
 	""".format(col, grade))
 	# cur.execute('SELECT * FROM Students WHERE G3 = ?');
-	return cur.fetchone()[1]
+	avg = cur.fetchone()
+	return avg[1] if avg != None else None
+
+def getGradeToColAvg(curr, grade, col):
+	cur.execute("""
+		SELECT *
+		FROM Students
+		WHERE G3 = {1}
+	""".format(col, grade))
+	avg = cur.fetchone()[1]
+	return avg if avg != None else None
 
 
 # Routes
@@ -70,7 +82,23 @@ def gradeAvgStats():
 		stats[x] = getMostOccuring(allStudCur, grade, x)
 	for x in avgStatsCols:
 		stats[x] = getAverageOfCol(allStudCur, grade, x)
-
 	print(stats)
 
 	return jsonify(stats)
+
+@app.route("/gradesToCol")
+def gradeToCol():
+	col = request.args.get('col')
+	print(col)
+	forEachGrade = []
+
+	if (col in mostOccuringStatsCols):
+		for grade in range(0, 20):
+			forEachGrade.append(getMostOccuring(allStudCur, grade, col))
+		return jsonify(forEachGrade)
+	elif (col in avgStatsCols):
+		for grade in range(0, 20):
+			forEachGrade.append(getAverageOfCol(allStudCur, grade, col))
+		return jsonify(forEachGrade)
+	else:
+		return "Invalid column name"

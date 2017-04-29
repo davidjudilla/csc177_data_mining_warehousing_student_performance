@@ -48,23 +48,24 @@ var testFlag = false;
                     });
                     */
 
-                $http.get('localhost:5000/gradeAvgStats?grade=12').then(function (response) {
+                    /*
+                $http.get('http://localhost:5000/gradeAvgStats?grade=12').then(function (response) {
                     var grades = response;
-                    console.log('SUCCESS AllStatsPerGrade.get: ', response);
-                }, function (error) {
-                    console.log('Err AllStatsPerGrade.get: ', error);
-                });
-                
-
-                /*
-                var grade = 14;
-                AllStatsPerGrade.get(grade).$promise.then(function (response) {
-                    var grades = response;
-                    console.log('SUCCESS AllStatsPerGrade.get: ', response);
+                    response
+                    console.log('SUCCESS AllStatsPerGrade.get: ' + response, response);
                 }, function (error) {
                     console.log('Err AllStatsPerGrade.get: ', error);
                 });
                 */
+
+
+                var grade = 14;
+                AllStatsPerGrade.get().$promise.then(function (response) {
+                    var grades = response;
+                    console.log('SUCCESS AllStatsPerGrade.get: ' + response['Dalc'], response);
+                }, function (error) {
+                    console.log('Err AllStatsPerGrade.get: ', error);
+                });
 
                   var data = new google.visualization.DataTable();
                   data.addColumn('number', 'X');

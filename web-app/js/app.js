@@ -35,10 +35,10 @@ var testFlag = false;
 
                 var tupleKey = getTupleKey(vm.dropdown1Selected);
 
-
+                /*
                 $http({
                           method: 'GET',
-                          url: 'http://www.google.com'
+                          url: 'http://localhost:5000/gradeAvgStats/?grade=14'
                     }).then(function successCallback(response) {
                             // this callback will be called asynchronously
                             // when the response is available
@@ -46,16 +46,15 @@ var testFlag = false;
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                     });
-//                http://localhost:5000/gradeAvgStats/?grade=14
+                    */
 
-                /*
                 $http.get('localhost:5000/gradeAvgStats?grade=12').then(function (response) {
                     var grades = response;
                     console.log('SUCCESS AllStatsPerGrade.get: ', response);
                 }, function (error) {
                     console.log('Err AllStatsPerGrade.get: ', error);
                 });
-                */
+                
 
                 /*
                 var grade = 14;

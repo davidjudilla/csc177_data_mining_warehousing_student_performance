@@ -1,5 +1,6 @@
-angular.module('studentPerformance', ['angularCharts'])
-        .controller('MainCtrl', [function ($scope, AllStatsPerGrade){
+angular.module('studentPerformance', ['angularCharts','ngResource'])
+        .controller('MainCtrl', ['$scope','$http','AllStatsPerGrade', function ($scope, $http, AllStatsPerGrade){
+
 
             google.charts.load('current', {packages: ['corechart', 'line']});
 
@@ -33,9 +34,34 @@ var testFlag = false;
                 vm.loadingGraph = true;
 
                 var tupleKey = getTupleKey(vm.dropdown1Selected);
+
+
+                $http({
+                          method: 'GET',
+                          url: 'http://www.google.com'
+                    }).then(function successCallback(response) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                    }, function errorCallback(response) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                    });
+//                http://localhost:5000/gradeAvgStats/?grade=14
+
                 /*
-                AllStatsPerGrade.get(tupleKey).$promise.then(function (response) {
+                $http.get('localhost:5000/gradeAvgStats?grade=12').then(function (response) {
                     var grades = response;
+                    console.log('SUCCESS AllStatsPerGrade.get: ', response);
+                }, function (error) {
+                    console.log('Err AllStatsPerGrade.get: ', error);
+                });
+                */
+
+                /*
+                var grade = 14;
+                AllStatsPerGrade.get(grade).$promise.then(function (response) {
+                    var grades = response;
+                    console.log('SUCCESS AllStatsPerGrade.get: ', response);
                 }, function (error) {
                     console.log('Err AllStatsPerGrade.get: ', error);
                 });

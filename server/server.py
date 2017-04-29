@@ -76,7 +76,9 @@ def hello():
     	0 : "/gradeAvgStats?grade=X",
     	1 : "/gradesToCol?col=X"
     }
-    return jsonify(endpoints)
+    response = jsonify(endpoints)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route("/gradeAvgStats")
 def gradeAvgStats():
@@ -88,21 +90,26 @@ def gradeAvgStats():
 		stats[x] = getAverageOfCol(allStudCur, grade, x)
 	print(stats)
 
-	return jsonify(stats)
+	response = jsonify(stats)
+	response.headers.add('Access-Control-Allow-Origin', '*')
+	return response
 
 @app.route("/gradesToCol")
 def gradeToCol():
 	col = request.args.get('col')
 	print(col)
 	forEachGrade = []
+	response = None
 
 	if (col in mostOccuringStatsCols):
 		for grade in range(0, 20):
 			forEachGrade.append(getMostOccuring(allStudCur, grade, col))
-		return jsonify(forEachGrade)
+		response = jsonify(forEachGrade)
 	elif (col in avgStatsCols):
 		for grade in range(0, 20):
 			forEachGrade.append(getAverageOfCol(allStudCur, grade, col))
-		return jsonify(forEachGrade)
+		response = jsonify(forEachGrade)
 	else:
-		return "Invalid column name"
+		response = "Invalid column name"
+	response.headers.add('Access-Control-Allow-Origin', '*')
+	return response

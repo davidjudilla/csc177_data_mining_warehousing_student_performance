@@ -1,5 +1,5 @@
 angular.module('studentPerformance', ['angularCharts','ngResource'])
-        .controller('MainCtrl', ['$scope','$http','AllStatsPerGrade', function ($scope, $http, AllStatsPerGrade){
+        .controller('MainCtrl', ['$scope','$http','AllStatsPerGrade','GradesPerCol', function ($scope, $http, AllStatsPerGrade, GradesPerCol){
 
 
             google.charts.load('current', {packages: ['corechart', 'line']});
@@ -9,227 +9,140 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.changeTupleBarGraph = undefined;
             vm.dropdown1Selected = undefined;
             vm.loadingGraph = true;
-var testFlag = false;
 
+            vm.currentStatsObj = undefined;
+            vm.currentLineObj = undefined;
 
+            vm.tupleSelected = undefined;
+            vm.lineGraphSelected = undefined;
 
+            var testFlag = false;
+            vm.grade = 14;
+            vm.multY = 1;
+            vm.multX = 5;
 
+            vm.barGraphTuples = ['Age', 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
+                                 'Daily Alcohol Consumption', 'Weekly Alcohol Consumption', 'Health' ];
 
+            function setData(){
+                var data = new google.visualization.DataTable();
+                data.addColumn('number', 'X');
+                data.addColumn('number', vm.lineGraphSelected);
 
-            function getTupleKey(key) {
-                if(key === 'Family Size'){
-                    console.log('Family Size: returning famsize');
-                    return 'famsize';
-                }else if (key === 'Failures') {
-                    return 'failures';
-                }
-            };
+                var count = 0;
+                var avg = 0;
+                var total = 0;
+                vm.currentLineObj.forEach(function(element){
+                        if (element > -1){
+                            total += element;
+                            count++;
+                            console.log('element > -1');
+                        }
+                });
 
-
-
-
-
-            //google.charts.setOnLoadCallback(drawBackgroundColor);
-            vm.drawLineGraph = function () {
-                vm.loadingGraph = true;
-
-                var tupleKey = getTupleKey(vm.dropdown1Selected);
-
+                avg = total/count;
+                var i=0;
+                vm.currentLineObj.forEach(function(element){
+                        if (!(element > -1)){
+                            vm.currentLineObj[i] = avg;
+                        }
+                        i++;
+                });
+                i=0;
                 /*
-                $http({
-                          method: 'GET',
-                          url: 'http://localhost:5000/gradeAvgStats/?grade=14'
-                    }).then(function successCallback(response) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                    }, function errorCallback(response) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                    });
-                    */
+                var k=0;
+                vm.currentLineObj.forEach(function(element){
+                            console.log('index: '+k+'    vm.currentLineObj: '+vm.currentLineObj[k]);
+                            k++;
+                        });
 
-                    /*
-                $http.get('http://localhost:5000/gradeAvgStats?grade=12').then(function (response) {
-                    var grades = response;
-                    response
-                    console.log('SUCCESS AllStatsPerGrade.get: ' + response, response);
-                }, function (error) {
-                    console.log('Err AllStatsPerGrade.get: ', error);
-                });
                 */
-
-
-                var grade = 14;
-                AllStatsPerGrade.get().$promise.then(function (response) {
-                    var grades = response;
-                    console.log('SUCCESS AllStatsPerGrade.get: ' + response['Dalc'], response);
-                }, function (error) {
-                    console.log('Err AllStatsPerGrade.get: ', error);
-                });
-
-                  var data = new google.visualization.DataTable();
-                  data.addColumn('number', 'X');
-                  data.addColumn('number', 'Cats');
-
-                  if(testFlag){
-                      data.addRows([
-                        [0, 0],   [1, 3/20],  [2, 2/20],  [3, 4/20],  [4, 5/20],  [5, 6/20]
-                    ]);
-
-                  } else {
-                      data.addRows([
-                        [0, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9]
-                    ]);
-
-                  }
-                  testFlag = !testFlag;
-
-                  /*data.addRows([
-                    [0, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
-                    [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
-                    [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
-                    [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
-                    [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
-                    [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
-                    [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
-                    [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
-                    [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
-                    [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
-                    [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
-                    [66, 70], [67, 72], [68, 75], [69, 80]
-                ]);*/
-
-                  var options = {
-                    hAxis: {
-                      title: 'Drinks'
-                    },
-                    vAxis: {
+              var options = {
+                  title: 'Average grade'+vm.lineGraphSelected+' for year with amoung students with X amout of failures',
+                  curveType: 'function',
+                  legend: { position: 'top-right' },
+                  hAxis: {
                       title: 'Grade %'
-                    },
-                    backgroundColor: '#f1f8e9'
-                  };
-
-                  var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-                  chart.draw(data, options);
-                  vm.loadingGraph = false;
-                }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/******************************************************************************************************
-
-*****************************************************************************************************
-*/
-
-            vm.config = {
-              title: 'Grades',
-              tooltips: true,
-              labels: true, //shows value on each bar
-              mouseover: function() {},
-              mouseout: function() {},
-              click: function() {},
-              legend: {
-                display: true,
-                position: 'right' //left || right
-                }
-            };
-
-            vm.dropdown1 = "Select One";
-            vm.changeTupleBarGraph = function (tuple){
-                    if(tuple !== undefined){
-
-                    } else {
-
-                    }
-            };
-
-            function getTupleKey(key) {
-                if(key === 'Family Size'){
-                    console.log('Family Size: returning famsize');
-                    return 'famsize';
-                }else if (key === 'Failures') {
-                    return 'failures';
-                }
-            };
-
-            vm.barGraphTuples = ['Family Size','Failures','Health','Absences'];
-
-            vm.submit = function(){
-                var tupleKey = getTupleKey(vm.dropdown1Selected);
-            AllStatsPerGrade.get(tupleKey).$promise.then(function (response) {
-
-                }, function (error) {
-                    console.log('No Assigned Rides: ', error);
-                });
-            };
-
-
-            vm.barGraph = {
-                series: ['Overall Grade'],
-                data: [{
-                    x: 1,
-                    y: [1],
-                    tooltip: "A"
-                },{
-                    x: 2,
-                    y: [2],
-                    tooltip: "B"
-                },{
-                    x: 3,
-                    y: [3],
-                    tooltip: "C"
-                },{
-                    x: 4,
-                    y: [4],
-                    tooltip: "D"
-                },{
-                    x: 5,
-                    y: [5],
-                    tooltip: "F"
-                }
-                ]
-            };
-
-                vm.bartest = {
-                series: ['Trimester 1', 'Trimester 2', 'Trimester 3'],
-                data: [{
-                  x: "A",
-                  y: [10, 5, 1],
-                  tooltip: "Grade 1: A"
-                }, {
-                  x: "B",
-                  y: [3, 1, 7]
-                }, {
-                  x: "C",
-                  y: [3, 5, 1]
-                }, {
-                  x: "D",
-                  y: [4, 2, 2]
-                }, {
-                  x: ["F"],
-                  y: [3, 5, 10]
-                }
-                ]
+                  },
+                  vAxis: {
+                      title: vm.lineGraphSelected
+                  },
+                  backgroundColor: '#f1f8e9'
               };
+
+
+              data.addRows([
+                  //[x,y]
+                [0*vm.multX, vm.currentLineObj[0]*vm.multY],   [1*vm.multX, vm.currentLineObj[1]*vm.multY],  [2*vm.multX, vm.currentLineObj[2]*vm.multY],  [3*vm.multX, vm.currentLineObj[3]*vm.multY],  [4*vm.multX, vm.currentLineObj[4]*vm.multY],
+                [5*vm.multX, vm.currentLineObj[5]*vm.multY],   [6*vm.multX, vm.currentLineObj[6]*vm.multY],  [7*vm.multX, vm.currentLineObj[7]*vm.multY],  [8*vm.multX, vm.currentLineObj[8]*vm.multY],  [9*vm.multX, vm.currentLineObj[9]*vm.multY],
+                [10*vm.multX, vm.currentLineObj[10]*vm.multY],   [11*vm.multX, vm.currentLineObj[11]*vm.multY],  [12*vm.multX, vm.currentLineObj[12]*vm.multY],  [13*vm.multX, vm.currentLineObj[13]*vm.multY],  [14*vm.multX, vm.currentLineObj[14]*vm.multY],
+                [15*vm.multX, vm.currentLineObj[15]*vm.multY],   [16*vm.multX, vm.currentLineObj[16]*vm.multY],  [17*vm.multX, vm.currentLineObj[17]*vm.multY],  [18*vm.multX, vm.currentLineObj[18]*vm.multY],  [19*vm.multX, vm.currentLineObj[19]*vm.multY]
+
+            ]);
+/*
+            data.addRows([
+                //[x,y]
+              [vm.currentLineObj[0]*vm.multY, 0],   [vm.currentLineObj[1]*vm.multY, 1],  [ vm.currentLineObj[2]*vm.multY, 2],  [vm.currentLineObj[3]*vm.multY, 3],  [vm.currentLineObj[4]*vm.multY, 4],
+              [vm.currentLineObj[5]*vm.multY, 5],   [vm.currentLineObj[6]*vm.multY, 6],  [vm.currentLineObj[7]*vm.multY, 7],  [vm.currentLineObj[8]*vm.multY, 8],  [vm.currentLineObj[9]*vm.multY, 9],
+              [vm.currentLineObj[10]*vm.multY, 10],   [vm.currentLineObj[11]*vm.multY, 11],  [vm.currentLineObj[12]*vm.multY, 12],  [vm.currentLineObj[13]*vm.multY, 13],  [vm.currentLineObj[14]*vm.multY, 14],
+              [vm.currentLineObj[15]*vm.multY, 15],   [vm.currentLineObj[16]*vm.multY, 16],  [vm.currentLineObj[17]*vm.multY, 17],  [vm.currentLineObj[18]*vm.multY, 18],  [vm.currentLineObj[19]*vm.multY, 19]
+
+          ]);
+*/
+              var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+              chart.draw(data, options);
+            }
+
+            vm.showLineGraph = function () {
+//                var tupleKey = getTupleKey(vm.lineGraphSelected);
+                var key = vm.lineGraphSelected;
+                var tupleKey = undefined;
+                                if(key === 'Family Size'){
+                                    tupleKey = 'famsize';
+                                }else if (key === 'Age') {
+                                    tupleKey = 'age';
+                                }else if (key === 'Absences') {
+                                    tupleKey = 'absences';
+                                }else if (key === 'Failures') {
+                                    tupleKey = 'failures';
+                                }else if (key === 'Family Relationship') {
+                                    tupleKey = 'famrel';
+                                }else if (key === 'Free Time') {
+                                    tupleKey = 'freetime';
+                                }else if (key === 'Going Out') {
+                                    tupleKey = 'goout';
+                                }else if (key === 'Daily Alcohol Consumption') {
+                                    tupleKey = 'Dalc';
+                                }else if (key === 'Weekly Alcohol Consumption') {
+                                    tupleKey = 'Walc';
+                                }else if (key === 'Health') {
+                                    tupleKey = 'health';
+                                }
+
+                var data = undefined;
+                vm.loadingStats = true;
+                    if(tupleKey !== undefined){
+
+                    GradesPerCol.get({tuple: tupleKey}).$promise.then(function (response) {
+                        vm.currentLineObj = response;
+                        console.log('SUCCESS GradesPerCol.get: ' + vm.currentLineObj[0], response);
+                        /*
+                        var count = 0;
+                        response.forEach(function(element){
+                            data.addRows([element, count]);
+                            count++;
+                        });
+                        */
+                        setData();
+                    }, function (error) {
+                        console.log('Err GradesPerCol.get: ', error);
+                    });
+                } else {
+                    console.log('Err tupleKey is undefined');
+                }
+                vm.loadingStats = false;
+            };
+            //google.charts.setOnLoadCallback(drawBackgroundColor);
 
 
 

@@ -2,9 +2,8 @@
 
 angular.module('studentPerformance')
     .factory('AllStatsPerGrade', function ($resource) {
-        var testapi = 'http://localhost:5000/';
-        var api = '';
-        return $resource('http://localhost:5000/gradeAvgStats?grade=12', {
+        var api = 'http://localhost:5000/';
+        return $resource(api + 'gradeAvgStats?grade=:grade', {
             grade: '@grade'
         }, {
             get: {
@@ -14,3 +13,17 @@ angular.module('studentPerformance')
         });
 
     });
+
+    angular.module('studentPerformance')
+        .factory('GradesPerCol', function ($resource) {
+            var api = 'http://localhost:5000/';
+            return $resource(api + 'gradesToCol?&col=:tuple', {
+                tuple: '@tuple'
+            }, {
+                get: {
+                    method: 'GET',
+                    isArray: true
+                }
+            });
+
+        });

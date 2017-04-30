@@ -18,23 +18,23 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
-<header align="center">
-    <h1 align="center">Student Life and Grade Correlation</h1>
-    <h4>
+<header align="center" style="background-color: #4fc3f7">
+    <p align="center" class="title">Student Life and Grade Correlation</p>
+    <p align="center" class="names">
         <a ng-href="https://github.com/blh22buck">Bryce Hairabedian</a>,&nbsp;
         <a ng-href="https://github.com/davidjudilla">David Judilla</a>,&nbsp;
         <a ng-href="https://github.com/justinmend">Justin Mendiguarin</a>
-    </h4>
+    </p>
 </header>
 <br>
 
-<body ng-controller="MainCtrl as ctrl">
+<body ng-controller="MainCtrl as ctrl" style="background-color: #eceff1;">
 
     <!-- bar chart -->
-    <div class="container-fluid" align="center" style="background-color: #f1f8e9;"><!-- style="background-color: #cfc;"-->
-        <div class="row">
+    <div class="container-fluid" align="center"><!-- style="background-color: #cfc;"-->
+        <div class="row" style="padding-bottom: 25px;">
             <!--left/top-->
-            <div class="row-xs-4 row-sm-4 row-md-4 col-lg-4">
+            <div class="row-xs-4 row-sm-4 row-md-4 col-lg-2">
                 <h3>Line Graph</h3>
                 <div class="form-group">
                     <label for="dropdown1">
@@ -42,24 +42,121 @@
 
                     </label>
                     <select name="dropdown1" id="dropdown1" class="form-control"
-                            ng-model="ctrl.lineGraphSelected">
+                            ng-model="ctrl.graphNiceDescription">
                         <option ng-repeat="tuple in ctrl.barGraphTuples" value="{{tuple}}">{{tuple}}</option>
                     </select>
-                    <div
-                        ng-messages="rideRequestForm.numPassengers.$dirty && rideRequestForm.numPassengers.$error">
-                        <div class="input-error" ng-message="required">* required</div>
-                    </div>
                 </div>
                 <button class="btn btn-success" ng-click="ctrl.showLineGraph()">Submit</button>
             </div>
             <!--right/bottom-->
-            <div class="row-xs-8 row-sm-8 row-md-8 col-lg-8">
+            <div class="row-xs-8 row-sm-8 row-md-8 col-lg-10">
                     <div class="row">
                           <div id="chart_div"></div>
                     </div>
             </div>
         </div>
+
+    <!-- stats -->
+        <div class="row">
+            <!--left||top-->
+            <div class="row-xs-4 row-sm-4 row-md-4 col-lg-2">
+                <h3>Most Common</h3>
+                <div class="form-group">
+                    <label for="dropdown1">
+                        This table shows the most common recorded value for the stat. Select grade %
+                    </label>
+                    <select name="dropdown2" id="dropdown2" class="form-control"
+                            ng-model="ctrl.usrSelGradePer">
+                        <option ng-repeat="gp in ctrl.gradePercentages" value="{{gp}}">{{gp}}</option>
+                    </select>
+                </div>
+                <button class="btn btn-success" ng-click="ctrl.showStats()">Submit</button>
+
+            </div>
+            <!--right||bottom-->
+            <div class="row-xs-8 row-sm-8 row-md-8 col-lg-10">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed">
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Daily Alcohol Consumption</th>
+                                    <td>{{ctrl.currentStatsObj['Dalc']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Weekly Alcohol Consumption</th>
+                                    <td>{{ctrl.currentStatsObj['Walc']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Absences</th>
+                                    <td>{{ctrl.currentStatsObj['absences']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Activities</th>
+                                    <td>{{ctrl.currentStatsObj['activities']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Age</th>
+                                    <td>{{ctrl.currentStatsObj['age']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Failures</th>
+                                    <td>{{ctrl.currentStatsObj['failures']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Family Relationship</th>
+                                    <td>{{ctrl.currentStatsObj['famrel']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Family Support</th>
+                                    <td>{{ctrl.currentStatsObj['famsup']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Free Time</th>
+                                    <td>{{ctrl.currentStatsObj['freetime']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Going Out</th>
+                                    <td>{{ctrl.currentStatsObj['goout']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Health</th>
+                                    <td>{{ctrl.currentStatsObj['health']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Internet</th>
+                                    <td>{{ctrl.currentStatsObj['internet']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Nursery</th>
+                                    <td>{{ctrl.currentStatsObj['nursery']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Romantic</th>
+                                    <td>{{ctrl.currentStatsObj['romantic']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">School Support</th>
+                                    <td>{{ctrl.currentStatsObj['schoolsup']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Sex</th>
+                                    <td>{{ctrl.currentStatsObj['sex']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Study Time</th>
+                                    <td>{{ctrl.currentStatsObj['studytime']}}</td>
+                                </tr>
+                                <tr ><!--ng-repeat="col in ctrl.stats"-->
+                                    <th class="col-xs-3">Travel Time</th>
+                                    <td>{{ctrl.currentStatsObj['traveltime']}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+        </div>
     </div>
+
 
 
     <script src="js/app.js"></script>

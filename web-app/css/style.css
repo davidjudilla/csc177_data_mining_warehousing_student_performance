@@ -1,3 +1,7 @@
+.h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
 .bar-chart {
  width: 600px;
  height: 600px;
@@ -6,4 +10,17 @@
 .padding-0{
     padding-right:0;
     padding-left:0;
+}
+.title{
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+}
+.names{
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.border-to-right{
+    border-right: 1px dashed #333;
 }

@@ -14,7 +14,11 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.currentLineObj = undefined;
 
             vm.tupleSelected = undefined;
-            vm.lineGraphSelected = undefined;
+            vm.graphNiceDescription = undefined;
+
+            vm.gradeSelected = undefined;
+            vm.usrSelGradePer = undefined;
+            vm.gradePercentages = [0,20,40,60,80,100];
 
             var testFlag = false;
             vm.grade = 14;
@@ -27,7 +31,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             function setData(){
                 var data = new google.visualization.DataTable();
                 data.addColumn('number', 'X');
-                data.addColumn('number', vm.lineGraphSelected);
+                data.addColumn('number', vm.graphNiceDescription);
 
                 var count = 0;
                 var avg = 0;
@@ -58,16 +62,16 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
 
                 */
               var options = {
-                  title: 'Average grade'+vm.lineGraphSelected+' for year with amoung students with X amout of failures',
+                  title: 'Average grade '+vm.graphNiceDescription+' for year with amoung students with X amout of failures',
                   curveType: 'function',
                   legend: { position: 'top-right' },
                   hAxis: {
                       title: 'Grade %'
                   },
                   vAxis: {
-                      title: vm.lineGraphSelected
+                      title: vm.graphNiceDescription
                   },
-                  backgroundColor: '#f1f8e9'
+                  backgroundColor: '#eceff1'
               };
 
 
@@ -94,8 +98,8 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             }
 
             vm.showLineGraph = function () {
-//                var tupleKey = getTupleKey(vm.lineGraphSelected);
-                var key = vm.lineGraphSelected;
+//                var tupleKey = getTupleKey(vm.graphNiceDescription);
+                var key = vm.graphNiceDescription;
                 var tupleKey = undefined;
                                 if(key === 'Family Size'){
                                     tupleKey = 'famsize';
@@ -144,6 +148,18 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             };
             //google.charts.setOnLoadCallback(drawBackgroundColor);
 
+            vm.showStats = function() {
+                    if(vm.usrSelGradePer !== undefined){
+                    vm.gradeSelected = vm.usrSelGradePer/5;
+                    AllStatsPerGrade.get({grade: vm.gradeSelected}).$promise.then(function (response) {
+                            vm.currentStatsObj = response;
+                            console.log('SUCCESS AllStatsPerGrade: '+vm.currentStatsObj['Dalc']);
+                        },function(err){
+                            console.log('err AllStatsPerGrade: '+response);
+                        });
+
+                    }
+            };
 
 
         }]);

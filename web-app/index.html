@@ -74,81 +74,86 @@
 
             </div>
             <!--right||bottom-->
+            <!-- Converted the tuple values to fixed 2 decimal places -->
             <div class="row-xs-8 row-sm-8 row-md-8 col-lg-10">
                     <div class="row">
                         <div class="table-responsive">
                             <table class="table table-bordered table-condensed">
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
                                     <th class="col-xs-3">Daily Alcohol Consumption</th>
-                                    <td>{{ctrl.currentStatsObj['Dalc']}}</td>
+                                    <!-- <td>hello</td> -->
+                                    <!-- <td>{{ctrl.currentStatsObj['Dalc']}} {{ctrl.tupleValueMeanings['Dalc']}}</td> -->
+                                    <td>{{ctrl.currentStatsObj['Dalc'].toFixed(2)}} {{ctrl.getMeaningLowHigh(ctrl.currentStatsObj['Dalc'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
                                     <th class="col-xs-3">Weekly Alcohol Consumption</th>
-                                    <td>{{ctrl.currentStatsObj['Walc']}}</td>
+                                    <td>{{ctrl.currentStatsObj['Walc'].toFixed(2)}} {{ctrl.getMeaningLowHigh(ctrl.currentStatsObj['Walc'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Absences</th>
-                                    <td>{{ctrl.currentStatsObj['absences']}}</td>
+                                  <!-- Are the absences throughout the student's entire time of persuing education? -->
+                                    <th class="col-xs-3">Number of School Absences</th>
+                                    <td>{{ctrl.currentStatsObj['absences'].toFixed(2)}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Activities</th>
-                                    <td>{{ctrl.currentStatsObj['activities']}}</td>
+                                    <th class="col-xs-3">Extra Curricular Activities</th>
+                                    <td>{{ctrl.currentStatsObj['activities']}} {{ctrl.getMeaningYesNo(ctrl.currentStatsObj['activities'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Age</th>
-                                    <td>{{ctrl.currentStatsObj['age']}}</td>
+                                    <th class="col-xs-3">Student's Age</th>
+                                    <td>{{ctrl.currentStatsObj['age'].toFixed(2)}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Failures</th>
-                                    <td>{{ctrl.currentStatsObj['failures']}}</td>
+                                    <th class="col-xs-3">Number of Past Class Failures</th>
+                                    <td>{{ctrl.currentStatsObj['failures'].toFixed(2)}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Family Relationship</th>
-                                    <td>{{ctrl.currentStatsObj['famrel']}}</td>
+                                    <th class="col-xs-3">Quality of Family Relationships</th>
+                                    <td>{{ctrl.currentStatsObj['famrel'].toFixed(2)}} {{ctrl.getMeaningBadGood(ctrl.currentStatsObj['famrel'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Family Support</th>
-                                    <td>{{ctrl.currentStatsObj['famsup']}}</td>
+                                    <th class="col-xs-3">Family Educational Support</th>
+                                    <td>{{ctrl.currentStatsObj['famsup']}} {{ctrl.getMeaningYesNo(ctrl.currentStatsObj['famsup'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Free Time</th>
-                                    <td>{{ctrl.currentStatsObj['freetime']}}</td>
+                                    <th class="col-xs-3">Free Time After School</th>
+                                    <td>{{ctrl.currentStatsObj['freetime'].toFixed(2)}} {{ctrl.getMeaningLowHigh(ctrl.currentStatsObj['freetime'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Going Out</th>
-                                    <td>{{ctrl.currentStatsObj['goout']}}</td>
+                                    <th class="col-xs-3">Going Out With Friends</th>
+                                    <td>{{ctrl.currentStatsObj['goout'].toFixed(2)}} {{ctrl.getMeaningLowHigh(ctrl.currentStatsObj['goout'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Health</th>
-                                    <td>{{ctrl.currentStatsObj['health']}}</td>
+                                    <th class="col-xs-3">Current Health Status</th>
+                                    <td>{{ctrl.currentStatsObj['health'].toFixed(2)}} {{ctrl.getMeaningBadGood(ctrl.currentStatsObj['health'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Internet</th>
-                                    <td>{{ctrl.currentStatsObj['internet']}}</td>
+                                    <th class="col-xs-3">Internet Acess at Home</th>
+                                    <td>{{ctrl.currentStatsObj['internet']}} {{ctrl.getMeaningYesNo(ctrl.currentStatsObj['internet'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Nursery</th>
-                                    <td>{{ctrl.currentStatsObj['nursery']}}</td>
+                                    <th class="col-xs-3">Attended Nursery School</th>
+                                    <td>{{ctrl.currentStatsObj['nursery']}} {{ctrl.getMeaningYesNo(ctrl.currentStatsObj['nursery'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Romantic</th>
-                                    <td>{{ctrl.currentStatsObj['romantic']}}</td>
+                                    <th class="col-xs-3">In a Romantic Relationship</th>
+                                    <td>{{ctrl.currentStatsObj['romantic']}} {{ctrl.getMeaningYesNo(ctrl.currentStatsObj['romantic'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">School Support</th>
-                                    <td>{{ctrl.currentStatsObj['schoolsup']}}</td>
+                                    <th class="col-xs-3">Extra Educational Support</th>
+                                    <td>{{ctrl.currentStatsObj['schoolsup']}} {{ctrl.getMeaningYesNo(ctrl.currentStatsObj['schoolsup'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Sex</th>
+                                <!-- Does this mean that the chosen gender is the outcome of between which gender of students had the particular grade percentage? -->
+                                    <th class="col-xs-3">Student's Sex</th>
                                     <td>{{ctrl.currentStatsObj['sex']}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Study Time</th>
-                                    <td>{{ctrl.currentStatsObj['studytime']}}</td>
+                                    <th class="col-xs-3">Weekly Study Time</th>
+                                    <td>{{ctrl.currentStatsObj['studytime']}} {{ctrl.getMeaningStudyTime(ctrl.currentStatsObj['studytime'])}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
-                                    <th class="col-xs-3">Travel Time</th>
-                                    <td>{{ctrl.currentStatsObj['traveltime']}}</td>
+                                    <th class="col-xs-3">Home to School Travel Time</th>
+                                    <td>{{ctrl.currentStatsObj['traveltime']}} {{ctrl.getMeaningTravelTime(ctrl.currentStatsObj['traveltime'])}}</td>
                                 </tr>
                             </table>
                         </div>

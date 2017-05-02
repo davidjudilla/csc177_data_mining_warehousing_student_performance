@@ -28,6 +28,8 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.barGraphTuples = ['Age', 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
                                  'Daily Alcohol Consumption', 'Weekly Alcohol Consumption', 'Health' ];
 
+            vm.tupleValueMeanings = undefined;
+
             function setData(){
                 var data = new google.visualization.DataTable();
                 data.addColumn('number', 'X');
@@ -148,12 +150,19 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             };
             //google.charts.setOnLoadCallback(drawBackgroundColor);
 
+            //Need a way to set meaning of tuples here
             vm.showStats = function() {
                     if(vm.usrSelGradePer !== undefined){
                     vm.gradeSelected = vm.usrSelGradePer/5;
                     AllStatsPerGrade.get({grade: vm.gradeSelected}).$promise.then(function (response) {
-                            vm.currentStatsObj = response;
-                            console.log('SUCCESS AllStatsPerGrade: '+vm.currentStatsObj['Dalc']);
+
+                            //  vm.currentStatsObj = getMeaningLowHigh(response);
+
+                             vm.currentStatsObj = response;
+                             //vm.tupleValueMeanings = getMeaningLowHigh(vm.currentStatsObj);
+                            console.log('SUCCESS AllStatsPerGrade: '+vm.currentStatsObj['Dalc'].toFixed(2));
+                            //console.log('SUCCESS AllStatsPerGrade: '+vm.currentStatsObj);
+                            //console.log('SUCCESS AllStatsPerGrade: '+vm.tupleValueMeanings);
                         },function(err){
                             console.log('err AllStatsPerGrade: '+response);
                         });
@@ -161,5 +170,89 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                     }
             };
 
+            // Defines the meaning of the values in the tuples with Low to High scale
+            vm.getMeaningLowHigh = function(tuple){
+              //need to take into account floating point values such as 1.5 and 2.2
+              if (tuple <= 1 && tuple >= 0){
+                return "Very Low"
+              } else if (tuple > 1 && tuple <= 2){
+                return "Low"
+              } else if (tuple > 2 && tuple <= 3){
+                return "Medium"
+              } else if (tuple > 3 && tuple <= 4){
+                return "High"
+              } else if (tuple > 4 && tuple <= 5){
+                return "Very High"
+              } else if (tuple < 0){
+                return "Error: negative value"
+              } else{
+                // return "Testing"
+              }
+            };
 
+            vm.getMeaningBadGood = function(tuple){
+              //need to take into account floating point values such as 1.5 and 2.2
+              if (tuple <= 1 && tuple >= 0){
+                return "Very Bad"
+              } else if (tuple > 1 && tuple <= 2){
+                return "Bad"
+              } else if (tuple > 2 && tuple <= 3){
+                return "Normal"
+              } else if (tuple > 3 && tuple <= 4){
+                return "Good"
+              } else if (tuple > 4 && tuple <= 5){
+                return "Very Good"
+              } else if (tuple < 0){
+                return "Error: negative value"
+              } else{
+                // return "Testing"
+              }
+            };
+
+            vm.getMeaningYesNo = function(tuple){
+              //need to take into account floating point values such as 1.5 and 2.2
+              if (tuple == 1){
+                return "Yes"
+              } else if (tuple == 0){
+                return "No"
+              } else if (tuple < 0){
+                return "Error: not binary"
+              } else{
+                // return "Testing"
+              }
+            };
+
+            vm.getMeaningStudyTime = function(tuple){
+              //need to take into account floating point values such as 1.5 and 2.2
+              if (tuple <= 1 && tuple >= 0){
+                return "(Less than 2 hours)"
+              } else if (tuple > 1 && tuple <= 2){
+                return "(Between 2 to 5 hours)"
+              } else if (tuple > 2 && tuple <= 3){
+                return "(Between 5 to 10 hours)"
+              } else if (tuple > 3 && tuple <= 4){
+                return "(Greater than 10 hours)"
+              } else if (tuple < 0){
+                return "(Error: negative value)"
+              } else{
+                // return "Testing"
+              }
+            };
+
+            vm.getMeaningTravelTime = function(tuple){
+              //need to take into account floating point values such as 1.5 and 2.2
+              if (tuple <= 1 && tuple >= 0){
+                return "(Less than 15 minutes)"
+              } else if (tuple > 1 && tuple <= 2){
+                return "(Between 15 to 30 minutes)"
+              } else if (tuple > 2 && tuple <= 3){
+                return "(Between 30 minutes to an hour)"
+              } else if (tuple > 3 && tuple <= 4){
+                return "(Greater than 1 hour)"
+              } else if (tuple < 0){
+                return "(Error: negative value)"
+              } else{
+                // return "Testing"
+              }
+            };
         }]);

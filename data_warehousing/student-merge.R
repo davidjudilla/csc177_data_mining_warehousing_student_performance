@@ -97,3 +97,18 @@ write.csv(portTimeSpentTable, file="data_warehousing/csv/portugeseTimeSpent.csv"
 # Do later
 unionStud <- merge(mathStud, portStud, all = TRUE)
 
+#Create time dimensional table
+# Get both math and port time tables
+mathTime=read.table("data_warehousing/csv/mathTimeSpent.csv",sep=";",header=TRUE)
+portTime=read.table("data_warehousing/csv/portugeseTimeSpent.csv",sep=";",header=TRUE)
+
+# Join both classes
+time <- merge(mathTime, portTime, all = TRUE)
+time
+
+relationship = data.frame(
+  famrel = unionStud$famrel,
+  romantic = unionStud$romantic,
+  famsup = unionStud$famsup 
+)
+relationship

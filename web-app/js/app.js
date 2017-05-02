@@ -89,7 +89,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                                 }
 
                 vm.loadingStats = true;
-                    if(tupleKey !== undefined){
+                if(tupleKey !== undefined){
 
                     GradesPerCol.get({tuple: tupleKey}).$promise.then(function (response) {
                         vm.currentLineObj = response;

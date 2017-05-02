@@ -100,11 +100,6 @@ portStud=read.table("student/student-por.csv",sep=";",header=TRUE)
 unionStud <- merge(mathStud, portStud, all = TRUE)
 
 #Create time dimensional table
-# Get both math and port time tables
-mathTime=read.table("data_warehousing/csv/mathTimeSpent.csv",sep=";",header=TRUE)
-portTime=read.table("data_warehousing/csv/portugeseTimeSpent.csv",sep=";",header=TRUE)
-
-# Join both classes
 time = data.frame(
   traveltime = unionStud$traveltime,
   studytime = unionStud$studytime,
@@ -113,6 +108,7 @@ time = data.frame(
 )
 time
 
+#Create relationship dimensional table
 relationship = data.frame(
   famrel = unionStud$famrel,
   romantic = unionStud$romantic,
@@ -120,5 +116,16 @@ relationship = data.frame(
 )
 relationship
 
+# writ time and relationship tables to csv
 write.csv(time, file="data_warehousing/csv/timeDimension.csv")
 write.csv(relationship, file="data_warehousing/csv/relationshipDimension.csv")
+
+student = data.frame(
+  school = unionStud$school,
+  sex = unionStud$sex,
+  age = unionStud$age,
+  address = unionStud$address,
+  G1 = unionStud$G1,
+  G2 = unionStud$G2,
+  G3 = unionStud$G3
+)

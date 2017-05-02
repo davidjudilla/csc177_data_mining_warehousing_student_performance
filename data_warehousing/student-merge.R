@@ -95,6 +95,8 @@ write.csv(portTimeSpentTable, file="data_warehousing/csv/portugeseTimeSpent.csv"
 
 # Look at all students, not just those who take BOTH math and portugese
 # Do later
+mathStud=read.table("student/student-mat.csv",sep=";",header=TRUE)
+portStud=read.table("student/student-por.csv",sep=";",header=TRUE)
 unionStud <- merge(mathStud, portStud, all = TRUE)
 
 #Create time dimensional table
@@ -103,7 +105,12 @@ mathTime=read.table("data_warehousing/csv/mathTimeSpent.csv",sep=";",header=TRUE
 portTime=read.table("data_warehousing/csv/portugeseTimeSpent.csv",sep=";",header=TRUE)
 
 # Join both classes
-time <- merge(mathTime, portTime, all = TRUE)
+time = data.frame(
+  traveltime = unionStud$traveltime,
+  studytime = unionStud$studytime,
+  freetime = unionStud$freetime,
+  goout = unionStud$goout
+)
 time
 
 relationship = data.frame(
@@ -112,3 +119,6 @@ relationship = data.frame(
   famsup = unionStud$famsup 
 )
 relationship
+
+write.csv(time, file="data_warehousing/csv/timeDimension.csv")
+write.csv(relationship, file="data_warehousing/csv/relationshipDimension.csv")

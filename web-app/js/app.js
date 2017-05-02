@@ -71,7 +71,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                   vAxis: {
                       title: vm.graphNiceDescription
                   },
-                  backgroundColor: '#eceff1'
+                  backgroundColor: '#fafbfc'
               };
 
 

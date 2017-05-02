@@ -28,8 +28,6 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.barGraphTuples = ['Age', 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
                                  'Daily Alcohol Consumption', 'Weekly Alcohol Consumption', 'Health' ];
 
-            vm.tupleValueMeanings = undefined;
-
             function setData(){
                 var data = new google.visualization.DataTable();
                 data.addColumn('number', 'X');
@@ -155,14 +153,8 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                     if(vm.usrSelGradePer !== undefined){
                     vm.gradeSelected = vm.usrSelGradePer/5;
                     AllStatsPerGrade.get({grade: vm.gradeSelected}).$promise.then(function (response) {
-
-                            //  vm.currentStatsObj = getMeaningLowHigh(response);
-
                              vm.currentStatsObj = response;
-                             //vm.tupleValueMeanings = getMeaningLowHigh(vm.currentStatsObj);
                             console.log('SUCCESS AllStatsPerGrade: '+vm.currentStatsObj['Dalc'].toFixed(2));
-                            //console.log('SUCCESS AllStatsPerGrade: '+vm.currentStatsObj);
-                            //console.log('SUCCESS AllStatsPerGrade: '+vm.tupleValueMeanings);
                         },function(err){
                             console.log('err AllStatsPerGrade: '+response);
                         });
@@ -172,7 +164,6 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
 
             // Defines the meaning of the values in the tuples with Low to High scale
             vm.getMeaningLowHigh = function(tuple){
-              //need to take into account floating point values such as 1.5 and 2.2
               if (tuple <= 1 && tuple >= 0){
                 return "Very Low"
               } else if (tuple > 1 && tuple <= 2){
@@ -190,8 +181,8 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
               }
             };
 
+            // Defines the meaning of the values in the tuples with Bad to Good scale
             vm.getMeaningBadGood = function(tuple){
-              //need to take into account floating point values such as 1.5 and 2.2
               if (tuple <= 1 && tuple >= 0){
                 return "Very Bad"
               } else if (tuple > 1 && tuple <= 2){
@@ -208,9 +199,8 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 // return "Testing"
               }
             };
-
+            //Binary Yes or No
             vm.getMeaningYesNo = function(tuple){
-              //need to take into account floating point values such as 1.5 and 2.2
               if (tuple == 1){
                 return "Yes"
               } else if (tuple == 0){
@@ -223,7 +213,6 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             };
 
             vm.getMeaningStudyTime = function(tuple){
-              //need to take into account floating point values such as 1.5 and 2.2
               if (tuple <= 1 && tuple >= 0){
                 return "(Less than 2 hours)"
               } else if (tuple > 1 && tuple <= 2){
@@ -240,7 +229,6 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             };
 
             vm.getMeaningTravelTime = function(tuple){
-              //need to take into account floating point values such as 1.5 and 2.2
               if (tuple <= 1 && tuple >= 0){
                 return "(Less than 15 minutes)"
               } else if (tuple > 1 && tuple <= 2){

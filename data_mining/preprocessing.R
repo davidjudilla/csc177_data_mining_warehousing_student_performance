@@ -29,3 +29,4 @@ unionStud <- merge(mathStud, portStud,
 unionStud$id = 1:nrow(unionStud)
 
 write.csv(unionStud, file = "data_mining/students.csv")
+library(dplyr)

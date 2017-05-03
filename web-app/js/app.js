@@ -25,7 +25,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.multY = 1;
             vm.multX = 5;
 
-            vm.barGraphTuples = ["Students Age", 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
+            vm.barGraphTuples = ['Age', 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
                                  'Daily Alcohol Consumption', 'Weekly Alcohol Consumption', 'Health' ];
 
             function setData(){
@@ -33,36 +33,11 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 data.addColumn('number', 'X');
                 data.addColumn('number', vm.graphNiceDescription);
 
-                var count = 0;
-                var avg = 0;
-                var total = 0;
-                vm.currentLineObj.forEach(function(element){
-                        if (element > -1){
-                            total += element;
-                            count++;
-                            console.log('element > -1');
-                        }
-                });
+                vm.currentLineObj[2] = (vm.currentLineObj[1]+vm.currentLineObj[4])/2;
+                vm.currentLineObj[3] = (vm.currentLineObj[2]+vm.currentLineObj[4])/2;
 
-                avg = total/count;
-                var i=0;
-                vm.currentLineObj.forEach(function(element){
-                        if (!(element > -1)){
-                            vm.currentLineObj[i] = avg;
-                        }
-                        i++;
-                });
-                i=0;
-                /*
-                var k=0;
-                vm.currentLineObj.forEach(function(element){
-                            console.log('index: '+k+'    vm.currentLineObj: '+vm.currentLineObj[k]);
-                            k++;
-                        });
-
-                */
               var options = {
-                  title: 'Average grade for '+ '"' + vm.graphNiceDescription + '" ' + 'among students with X amount of failures during the school year',
+                  title: 'Average grade '+vm.graphNiceDescription+' for year with amoung students with X amout of failures',
                   curveType: 'function',
                   legend: { position: 'top-right' },
                   hAxis: {
@@ -71,7 +46,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                   vAxis: {
                       title: vm.graphNiceDescription
                   },
-                  backgroundColor: '#eceff1'
+                  backgroundColor: '#fafbfc'
               };
 
 
@@ -83,27 +58,17 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 [15*vm.multX, vm.currentLineObj[15]*vm.multY],   [16*vm.multX, vm.currentLineObj[16]*vm.multY],  [17*vm.multX, vm.currentLineObj[17]*vm.multY],  [18*vm.multX, vm.currentLineObj[18]*vm.multY],  [19*vm.multX, vm.currentLineObj[19]*vm.multY]
 
             ]);
-/*
-            data.addRows([
-                //[x,y]
-              [vm.currentLineObj[0]*vm.multY, 0],   [vm.currentLineObj[1]*vm.multY, 1],  [ vm.currentLineObj[2]*vm.multY, 2],  [vm.currentLineObj[3]*vm.multY, 3],  [vm.currentLineObj[4]*vm.multY, 4],
-              [vm.currentLineObj[5]*vm.multY, 5],   [vm.currentLineObj[6]*vm.multY, 6],  [vm.currentLineObj[7]*vm.multY, 7],  [vm.currentLineObj[8]*vm.multY, 8],  [vm.currentLineObj[9]*vm.multY, 9],
-              [vm.currentLineObj[10]*vm.multY, 10],   [vm.currentLineObj[11]*vm.multY, 11],  [vm.currentLineObj[12]*vm.multY, 12],  [vm.currentLineObj[13]*vm.multY, 13],  [vm.currentLineObj[14]*vm.multY, 14],
-              [vm.currentLineObj[15]*vm.multY, 15],   [vm.currentLineObj[16]*vm.multY, 16],  [vm.currentLineObj[17]*vm.multY, 17],  [vm.currentLineObj[18]*vm.multY, 18],  [vm.currentLineObj[19]*vm.multY, 19]
 
-          ]);
-*/
               var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
               chart.draw(data, options);
             }
 
             vm.showLineGraph = function () {
-//                var tupleKey = getTupleKey(vm.graphNiceDescription);
                 var key = vm.graphNiceDescription;
                 var tupleKey = undefined;
                                 if(key === 'Family Size'){
                                     tupleKey = 'famsize';
-                                }else if (key === "Students Age") {
+                                }else if (key === 'Age') {
                                     tupleKey = 'age';
                                 }else if (key === 'Absences') {
                                     tupleKey = 'absences';
@@ -123,20 +88,12 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                                     tupleKey = 'health';
                                 }
 
-                var data = undefined;
                 vm.loadingStats = true;
-                    if(tupleKey !== undefined){
+                if(tupleKey !== undefined){
 
                     GradesPerCol.get({tuple: tupleKey}).$promise.then(function (response) {
                         vm.currentLineObj = response;
                         console.log('SUCCESS GradesPerCol.get: ' + vm.currentLineObj[0], response);
-                        /*
-                        var count = 0;
-                        response.forEach(function(element){
-                            data.addRows([element, count]);
-                            count++;
-                        });
-                        */
                         setData();
                     }, function (error) {
                         console.log('Err GradesPerCol.get: ', error);
@@ -146,7 +103,6 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 }
                 vm.loadingStats = false;
             };
-            //google.charts.setOnLoadCallback(drawBackgroundColor);
 
             //Need a way to set meaning of tuples here
             vm.showStats = function() {
@@ -243,11 +199,4 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 // return "Testing"
               }
             };
-
-            vm.getScale = function(tuple){
-              if (tuple == "Student's Age" ){
-                return "student's age (numeric: from 15 to 22)"
-              }
-            };
-
         }]);

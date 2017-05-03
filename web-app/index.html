@@ -34,12 +34,11 @@
     <div class="container-fluid" align="center"><!-- style="background-color: #cfc;"-->
         <div class="row" style="padding-bottom: 25px;">
             <!--left/top-->
-            <div class="row-xs-4 row-sm-4 row-md-4 col-lg-2">
+            <div class="row-xs-4 row-sm-4 row-md-4 col-lg-2" align="left">
                 <h3>Line Graph</h3>
                 <div class="form-group">
                     <label for="dropdown1">
                         This graph shows the *correlation* between the students grades averages.
-
                     </label>
                     <select name="dropdown1" id="dropdown1" class="form-control"
                             ng-model="ctrl.graphNiceDescription">
@@ -47,9 +46,30 @@
                     </select>
                 </div>
                 <button class="btn btn-success" ng-click="ctrl.showLineGraph()">Submit</button>
+                <h4>Description of Y-axis:</h4>
+                <div ng-switch on="ctrl.graphNiceDescription">
+                  <div ng-switch-when="Students Age">
+                    <span>Student's age (numeric: from 15 to 22).</span>
+                  </div>
+                  <div ng-switch-when="Absences">
+                    <span>Number of school absences (numeric: from 0 to 93).</span>
+                  </div>
+                  <div ng-switch-when="Failures">
+                    <span>Number of past class failures (numeric: n if 1<=n<3, else 4).</span>
+                  </div>
+                  <div ng-switch-when="Family Relationship">
+                    <span>Quality of family relationships (numeric: from 1 - very bad to 5 - excellent).</span>
+                  </div>
+                  <div ng-switch-when="Daily Alcohol Consumption">
+                    <span>Workday alcohol consumption (numeric: from 1 - very low to 5 - very high).</span>
+                  </div>
+                  <div ng-switch-when="Weekly Alcohol Consumption">
+                    <span>Weekend alcohol consumption (numeric: from 1 - very low to 5 - very high).</span>
+                  </div>
+                </div>
             </div>
             <!--right/bottom-->
-            <div class="row-xs-8 row-sm-8 row-md-8 col-lg-10">
+            <div class="row-xs-8 row-sm-8 row-md-8 col-lg-10" align="left" >
                     <div class="row">
                           <div id="chart_div"></div>
                     </div>
@@ -146,7 +166,8 @@
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->
                                 <!-- Does this mean that the chosen gender is the outcome of between which gender of students had the particular grade percentage? -->
-                                    <th class="col-xs-3">Student's Sex</th>
+
+                                    <th class="col-xs-3">Majority gender within the selected grade range</th>
                                     <td>{{ctrl.currentStatsObj['sex']}}</td>
                                 </tr>
                                 <tr ><!--ng-repeat="col in ctrl.stats"-->

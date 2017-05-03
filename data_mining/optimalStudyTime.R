@@ -23,27 +23,21 @@ test_set = subset(unionStud, split == F)
 #Coming up Simple Linear Regression
 
 library(randomForest)
-# fit <- randomForest(G3 ~ . - id - G1 - G2, 
-#                     data = training_set,
-#                     importance = TRUE,
-#                     ntree = 5000
-# )
-
-fit <- randomForest(G3 ~ sex + age + famsize + traveltime + studytime + failures + 
+fit <- randomForest(as.factor(studytime) ~ sex + age + famsize + traveltime + failures + 
                       schoolsup + famsup + paid + activities + nursery + higher + internet + romantic +
-                      famrel + freetime + goout + Dalc + Walc + health + absences, 
+                      famrel + freetime + goout + Dalc + Walc + health + absences + G3, 
                     data = training_set,
                     importance = TRUE,
                     ntree = 1000
 )
 
 varImpPlot(fit)
+print(fit$confusion)
 prediction <- predict(fit, test_set)
-final <- data.frame(id = test_set$id, actual = test_set$G3, predictedG3 = prediction)
-
-sum(abs(final$actual-final$predictedG3) < 2)
+final <- data.frame(id = test_set$id, actual = test_set$studytime, predictedTime = prediction)
+errorRate <- final[final$actual != final$predictedTime,] %>% nrow / final %>% nrow
 
 library(ggplot2)
 ggplot(final) +
   geom_point(aes(x = id, y = actual), color = "blue") + 
-  geom_point(aes(x = id, y = predictedG3), color = "red")
+  geom_point(aes(x = id, y = predictedTime), color = "red")

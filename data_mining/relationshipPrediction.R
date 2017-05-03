@@ -23,12 +23,6 @@ test_set = subset(unionStud, split == F)
 #Coming up Simple Linear Regression
 
 library(randomForest)
-# fit <- randomForest(G3 ~ . - id - G1 - G2, 
-#                     data = training_set,
-#                     importance = TRUE,
-#                     ntree = 5000
-# )
-
 fit <- randomForest(romantic ~ sex + age + famsize + traveltime + studytime + failures + 
                       schoolsup + famsup + paid + activities + nursery + higher + internet +
                       famrel + freetime + goout + Dalc + Walc + health + absences + G3, 
@@ -41,8 +35,8 @@ fit <- randomForest(romantic ~ sex + age + famsize + traveltime + studytime + fa
 varImpPlot(fit)
 print(fit)
 prediction <- predict(fit, test_set)
-final <- data.frame(id = test_set$id, actual = test_set$romantic, predictedG3 = prediction)
-
+final <- data.frame(id = test_set$id, actual = test_set$romantic, predictedRomantic = prediction)
+errorRate <- final[final$actual != final$predictedRomantic,] %>% nrow / final %>% nrow
 
 library(ggplot2)
 ggplot(final) +

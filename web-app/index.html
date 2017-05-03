@@ -182,6 +182,26 @@
                         </div>
                     </div>
             </div>
+        </div><!-- end stats row-->
+        <div class="row">
+            <!--left||top-->
+            <div class="row-xs-4 row-sm-4 row-md-4 col-lg-2">
+                <h3>Most Common</h3>
+                <div class="form-group">
+                    <label for="dropdown1">
+                        This table shows the most common recorded value for the stat. Select grade %
+                    </label>
+                    <select name="dropdown2" id="dropdown2" class="form-control"
+                            ng-model="ctrl.usrSelGradePer">
+                        <option ng-repeat="gp in ctrl.gradePercentages" value="{{gp}}">{{gp}}</option>
+                    </select>
+                </div>
+                <button class="btn btn-success" ng-click="ctrl.showStats()">Submit</button>
+            </div>
+
+            <div class="row-xs-8 row-sm-8 row-md-8 col-lg-10">
+                <div id="donutchart" style="width: 900px; height: 500px;"></div>
+            </div>
         </div>
     </div>
 

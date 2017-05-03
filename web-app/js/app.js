@@ -25,7 +25,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.multY = 1;
             vm.multX = 5;
 
-            vm.barGraphTuples = ['Age', 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
+            vm.barGraphTuples = ["Students Age", 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
                                  'Daily Alcohol Consumption', 'Weekly Alcohol Consumption', 'Health' ];
 
             function setData(){
@@ -62,7 +62,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
 
                 */
               var options = {
-                  title: 'Average grade '+vm.graphNiceDescription+' for year with amoung students with X amout of failures',
+                  title: 'Average grade for '+ '"' + vm.graphNiceDescription + '" ' + 'among students with X amount of failures during the school year',
                   curveType: 'function',
                   legend: { position: 'top-right' },
                   hAxis: {
@@ -103,7 +103,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 var tupleKey = undefined;
                                 if(key === 'Family Size'){
                                     tupleKey = 'famsize';
-                                }else if (key === 'Age') {
+                                }else if (key === "Students Age") {
                                     tupleKey = 'age';
                                 }else if (key === 'Absences') {
                                     tupleKey = 'absences';
@@ -243,4 +243,11 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 // return "Testing"
               }
             };
+
+            vm.getScale = function(tuple){
+              if (tuple == "Student's Age" ){
+                return "student's age (numeric: from 15 to 22)"
+              }
+            };
+
         }]);

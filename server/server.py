@@ -46,7 +46,6 @@ def getMostOccuring(cur, grade, col):
 	""".format(col, grade))
 	print(grade)
 	mostOccuring = cur.fetchone()
-	# cur.execute('SELECT * FROM Students WHERE G3 = ?');
 	return mostOccuring[0] if mostOccuring != None else None
 
 def getAverageOfCol(cur, grade, col):
@@ -55,17 +54,16 @@ def getAverageOfCol(cur, grade, col):
 		FROM Students
 		WHERE G3 = {1}
 	""".format(col, grade))
-	# cur.execute('SELECT * FROM Students WHERE G3 = ?');
 	avg = cur.fetchone()
 	return avg[1] if avg != None else None
 
-def getGradeToColAvg(curr, grade, col):
+def getGradeFromCol(cur, colName, colValue):
 	cur.execute("""
-		SELECT *
+		SELECT G3
 		FROM Students
-		WHERE G3 = {1}
-	""".format(col, grade))
-	avg = cur.fetchone()[1]
+		WHERE {0} = {1}
+	""".format(colName, colValue))
+	avg = cur.fetchall()
 	return avg if avg != None else None
 
 
@@ -111,5 +109,19 @@ def gradeToCol():
 		response = jsonify(forEachGrade)
 	else:
 		response = "Invalid column name"
+	response.headers.add('Access-Control-Allow-Origin', '*')
+	return response
+
+
+@app.route("/getGradeFromCol")
+def gradeFromCol():
+	colName = request.args.get('colName')
+	colValue = request.args.get('colValue')
+
+	response = None
+	response = getGradeFromCol(allStudCur, colName, colValue)
+	response = [item for sublist in response for item in sublist]
+	response = jsonify(response)
+
 	response.headers.add('Access-Control-Allow-Origin', '*')
 	return response

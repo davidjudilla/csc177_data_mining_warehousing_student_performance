@@ -186,20 +186,26 @@
         <div class="row">
             <!--left||top-->
             <div class="row-xs-4 row-sm-4 row-md-4 col-lg-2">
-                <h3>Most Common</h3>
+                <h3>Donut Chart</h3>
                 <div class="form-group">
                     <label for="dropdown1">
-                        This table shows the most common recorded value for the stat. Select grade %
+                        Choose a time factor and selet a rage to see grade distrubution.
                     </label>
-                    <select name="dropdown2" id="dropdown2" class="form-control"
-                            ng-model="ctrl.usrSelGradePer">
-                        <option ng-repeat="gp in ctrl.gradePercentages" value="{{gp}}">{{gp}}</option>
+
+                    <select name="dropdown3" id="dropdown3" class="form-control"
+                            ng-model="ctrl.userSelectedTimeFactor">
+                        <option ng-repeat="tf in ctrl.uiTimeFactors" value="{{tf}}">{{tf}}</option>
+                    </select>
+                    <p>Range: 1 Very Low - 4 Very High</p>
+                    <select name="dropdown4" id="dropdown4" class="form-control"
+                            ng-model="ctrl.userSelectedTimeScale">
+                        <option ng-repeat="t in ctrl.uiTimeScale4" value="{{t}}">{{t}}</option>
                     </select>
                 </div>
-                <button class="btn btn-success" ng-click="ctrl.showStats()">Submit</button>
+                <button class="btn btn-success" ng-click="ctrl.showDonut()">Submit</button>
             </div>
 
-            <div class="row-xs-8 row-sm-8 row-md-8 col-lg-10" ng-controller="donutCtrl as dctrl">
+            <div class="row-xs-8 row-sm-8 row-md-8 col-lg-10">
                 <div id="donutchart" style="width: 900px; height: 500px;"></div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 angular.module('studentPerformance', ['angularCharts','ngResource'])
-        .controller('MainCtrl', ['$scope','$http','AllStatsPerGrade','GradesPerCol', function ($scope, $http, AllStatsPerGrade, GradesPerCol){
+        .controller('MainCtrl', ['$scope','$http','AllStatsPerGrade','GradesPerCol', 'GradeDist', function ($scope, $http, AllStatsPerGrade, GradesPerCol, GradeDist){
 
 
             google.charts.load('current', {packages: ['corechart', 'line']});
@@ -20,13 +20,106 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.usrSelGradePer = undefined;
             vm.gradePercentages = [0,20,40,60,80,100];
 
+            vm.uiTimeFactors = ['traveltime', 'studytime', 'freetime', 'gooout'];
+            vm.uiTimeScale4 = [4,3,2,1];
+            vm.uiTimeScale5 = [1,2,3,4,5];
+            vm.uiDonutTimeSelected = undefined;
+            vm.userSelectedTimeFactor = undefined;
+             vm.userSelectedTimeScale = undefined;
+
             var testFlag = false;
             vm.grade = 14;
             vm.multY = 1;
             vm.multX = 5;
+            vm.gradeArray =[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,];
 
             vm.barGraphTuples = ["Students Age", 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
                                  'Daily Alcohol Consumption', 'Weekly Alcohol Consumption', 'Health' ];
+
+         function drawDChart() {
+
+
+                 var data = google.visualization.arrayToDataTable([
+                   ['Grade', 'How many recieved'],
+                   ['Poor',     vm.gradeArray[0]+vm.gradeArray[1]+vm.gradeArray[2]],
+                   ['Weak',     vm.gradeArray[3]+vm.gradeArray[4]+ vm.gradeArray[5]+vm.gradeArray[6]],
+                   ['Sufficient',    vm.gradeArray[7]+vm.gradeArray[8]
+                                        +vm.gradeArray[9]+vm.gradeArray[10]+vm.gradeArray[11]+vm.gradeArray[12]+vm.gradeArray[13]],
+                   ['Good',     vm.gradeArray[14]+vm.gradeArray[15]+vm.gradeArray[16]],
+                   ['Very Good',     vm.gradeArray[17]+vm.gradeArray[18]+vm.gradeArray[19]],
+                   ['Excellent',     vm.gradeArray[20]]
+                 ]);
+
+
+                 var options = {
+                   title: 'Grade Distribution',
+                   pieHole: 0.4,
+                 };
+
+                 var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+                 chart.draw(data, options);
+               }
+
+               vm.showDonut = function(){
+
+
+                       GradeDist.get({colName: vm.userSelectedTimeFactor, colValue: vm.userSelectedTimeScale}).$promise.then(function (response) {
+                           vm.DonutObj = response;
+                           console.log('SUCCESS GradeDist.get:', response);
+
+                           vm.DonutObj.forEach(function(element, index){
+                               console.log('hey hey got vm.gradeArray++= '+element+' '+index);
+                               if(element === 0){ //if the grade is 0, then count grade 0 ++
+                                   vm.gradeArray[0]++;
+                               } else if (element === 1){
+                                   vm.gradeArray[1]++;
+                               } else if (element === 2){
+                                   vm.gradeArray[2]++;
+                               } else if (element === 3){
+                                   vm.gradeArray[3]++;
+                               } else if (vm.DonutObj[index] === '4'){
+                                   vm.gradeArray[4]++;
+                               } else if (element === 5){
+                                   vm.gradeArray[5]++;
+                               } else if (element === 6){
+                                   vm.gradeArray[6]++;
+                               } else if (element === 7){
+                                   vm.gradeArray[7]++;
+                               } else if (element === 8){
+                                   vm.gradeArray[8]++;
+                               } else if (element === 9){
+                                   vm.gradeArray[9]++;
+                               } else if (element === 10){
+                                   vm.gradeArray[10]++;
+                               } else if (element === 11){
+                                   vm.gradeArray[11]++;
+                               } else if (element === 12){
+                                   vm.gradeArray[12]++;
+                               } else if (element === 13){
+                                   vm.gradeArray[13]++;
+                               } else if (element === 14){
+                                   vm.gradeArray[14]++;
+                               } else if (element === 15){
+                                   vm.gradeArray[15]++;
+                               } else if (element === 16){
+                                   vm.gradeArray[16]++;
+                               } else if (element === 17){
+                                   vm.gradeArray[17]++;
+                               } else if (element === 18){
+                                   vm.gradeArray[18]++;
+                               } else if (element === 19){
+                                   vm.gradeArray[19]++;
+                               } else if (element === 20){
+                                   vm.gradeArray[20]++;
+                               }
+                           });
+                           drawDChart();
+
+                       }, function (error) {
+                           console.log('Err GradeDist.get: ', error);
+                       });
+
+               };
 
             function setData(){
                 var data = new google.visualization.DataTable();

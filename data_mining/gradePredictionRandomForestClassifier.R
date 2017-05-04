@@ -14,7 +14,7 @@ source("data_mining/preprocessing.R")
 
 # Classifying if a student is passing or failing, so add new column to base formula
 # Passing is a grade GTE 10
-unionStud$pass <- unionStud$G3 >= 10
+allStud$pass <- allStud$G3 >= 10
 
 library(caTools)
 set.seed(123)
@@ -38,12 +38,19 @@ fit <- randomForest(as.factor(pass) ~ sex + age + famsize + traveltime + studyti
 )
 
 varImpPlot(fit)
-prediction <- predict(fit, test_set)
+fit.prediction <- predict(fit, test_set, type = "prob")
 print(fit)
 results <- data.frame(id = test_set$id, actual = test_set$pass, predicted = prediction)
 
 
+
 library(ggplot2)
-ggplot(results) +
-  geom_point(aes(x = id, y = actual), color = "blue") + 
-  geom_point(aes(x = id, y = predictedG3), color = "red")
+ggplot(results, aes(x = actual, y = predicted)) +
+  geom_point()
+
+fit.pr <- predict(fit, test_set, type = "prob")[,2]
+fit.pred <- prediction(fit.pr, test_set$pass)
+fit.perf = performance(fit.pred, "tpr", "fpr")
+plot(fit.perf,main="ROC Curve for Random Forest",col=2,lwd=2)
+abline(a=0,b=1,lwd=2,lty=2,col="gray")
+

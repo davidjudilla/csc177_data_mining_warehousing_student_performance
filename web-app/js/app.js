@@ -68,7 +68,6 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                            console.log('SUCCESS GradeDist.get:', response);
 
                            vm.DonutObj.forEach(function(element, index){
-                               console.log('hey hey got vm.gradeArray++= '+element+' '+index);
                                if(element === 0){ //if the grade is 0, then count grade 0 ++
                                    vm.gradeArray[0]++;
                                } else if (element === 1){

@@ -20,12 +20,13 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.usrSelGradePer = undefined;
             vm.gradePercentages = [0,20,40,60,80,100];
 
-            vm.uiTimeFactors = ['Travel Time', 'Study Time', 'Free Time', 'Go Out'];
+            vm.uiTimeFactors = ['Travel Time', 'Study Time', 'Free Time', 'Going Out'];
             vm.uiTimeScale4 = [4,3,2,1];
             vm.uiTimeScale5 = [1,2,3,4,5];
             vm.uiDonutTimeSelected = undefined;
             vm.userSelectedTimeFactor = undefined;
              vm.userSelectedTimeScale = undefined;
+             vm.tkey = undefined;
 
             var testFlag = false;
             vm.grade = 14;
@@ -61,24 +62,26 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                }
 
                vm.showDonut = function(){
-                   var key = undefined;
-                   var tupleKey = undefined;
+
                    if(vm.userSelectedTimeFactor !== undefined){
-                       key = vm.userSelectedTimeFactor;
+                      var key = vm.userSelectedTimeFactor;
                        if (key === 'Free Time') {
-                           tupleKey = 'freetime';
+                           vm.tkey = 'freetime';
+                           console.log('vm.tkey: '+vm.tkey);
                        } else if (key === 'Going Out') {
-                           tupleKey = 'goout';
+                          vm.tkey = 'goout';
+                          console.log('vm.tkey: '+vm.tkey);
                        } else if (key === 'Study Time') {
-                           tupleKey = 'studytime';
+                           vm.tkey = 'studytime';
+                           console.log('vm.tkey: '+vm.tkey);
                        }else if (key === 'Travel Time') {
-                           tupleKey = 'traveltime';
+                           vm.tkey = 'traveltime';
+                           console.log('vm.tkey: '+vm.tkey);
                        }
                    }
 
 
-
-                       GradeDist.get({colName: tupleKey, colValue: vm.userSelectedTimeScale}).$promise.then(function (response) {
+                       GradeDist.get({colName: vm.tkey, colValue: vm.userSelectedTimeScale}).$promise.then(function (response) {
                            vm.DonutObj = response;
                            console.log('SUCCESS GradeDist.get:', response);
 

@@ -20,7 +20,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.usrSelGradePer = undefined;
             vm.gradePercentages = [0,20,40,60,80,100];
 
-            vm.uiTimeFactors = ['traveltime', 'studytime', 'freetime', 'gooout'];
+            vm.uiTimeFactors = ['traveltime', 'studytime', 'freetime', 'goout'];
             vm.uiTimeScale4 = [4,3,2,1];
             vm.uiTimeScale5 = [1,2,3,4,5];
             vm.uiDonutTimeSelected = undefined;

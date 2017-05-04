@@ -25,7 +25,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.multY = 1;
             vm.multX = 5;
 
-            vm.barGraphTuples = ['Age', 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
+            vm.barGraphTuples = ["Students Age", 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
                                  'Daily Alcohol Consumption', 'Weekly Alcohol Consumption', 'Health' ];
 
             function setData(){
@@ -37,7 +37,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 vm.currentLineObj[3] = (vm.currentLineObj[2]+vm.currentLineObj[4])/2;
 
               var options = {
-                  title: 'Average grade '+vm.graphNiceDescription+' for year with amoung students with X amout of failures',
+                  title: 'Average grade for '+ '"' + vm.graphNiceDescription + '" ' + 'among students with X amount of failures during the school year',
                   curveType: 'function',
                   legend: { position: 'top-right' },
                   hAxis: {
@@ -68,7 +68,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 var tupleKey = undefined;
                                 if(key === 'Family Size'){
                                     tupleKey = 'famsize';
-                                }else if (key === 'Age') {
+                                }else if (key === "Students Age") {
                                     tupleKey = 'age';
                                 }else if (key === 'Absences') {
                                     tupleKey = 'absences';
@@ -165,6 +165,44 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 return "Error: not binary"
               } else{
                 // return "Testing"
+              }
+            };
+
+            vm.getMeaningStudyTime = function(tuple){
+              if (tuple <= 1 && tuple >= 0){
+                return "(Less than 2 hours)"
+              } else if (tuple > 1 && tuple <= 2){
+                return "(Between 2 to 5 hours)"
+              } else if (tuple > 2 && tuple <= 3){
+                return "(Between 5 to 10 hours)"
+              } else if (tuple > 3 && tuple <= 4){
+                return "(Greater than 10 hours)"
+              } else if (tuple < 0){
+                return "(Error: negative value)"
+              } else{
+                // return "Testing"
+              }
+            };
+
+            vm.getMeaningTravelTime = function(tuple){
+              if (tuple <= 1 && tuple >= 0){
+                return "(Less than 15 minutes)"
+              } else if (tuple > 1 && tuple <= 2){
+                return "(Between 15 to 30 minutes)"
+              } else if (tuple > 2 && tuple <= 3){
+                return "(Between 30 minutes to an hour)"
+              } else if (tuple > 3 && tuple <= 4){
+                return "(Greater than 1 hour)"
+              } else if (tuple < 0){
+                return "(Error: negative value)"
+              } else{
+                // return "Testing"
+              }
+            };
+
+            vm.getScale = function(tuple){
+              if (tuple == "Student's Age" ){
+                return "student's age (numeric: from 15 to 22)"
               }
             };
 

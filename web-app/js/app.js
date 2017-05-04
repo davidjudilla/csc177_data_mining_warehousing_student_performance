@@ -20,7 +20,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.usrSelGradePer = undefined;
             vm.gradePercentages = [0,20,40,60,80,100];
 
-            vm.uiTimeFactors = ['traveltime', 'studytime', 'freetime', 'goout'];
+            vm.uiTimeFactors = ['Travel Time', 'Study Time', 'Free Time', 'Go Out'];
             vm.uiTimeScale4 = [4,3,2,1];
             vm.uiTimeScale5 = [1,2,3,4,5];
             vm.uiDonutTimeSelected = undefined;
@@ -33,7 +33,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.multX = 5;
             vm.gradeArray =[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,];
 
-            vm.barGraphTuples = ["Students Age", 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
+            vm.barGraphTuples = ["Students Age", 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Travel Time', 'Going Out',
                                  'Daily Alcohol Consumption', 'Weekly Alcohol Consumption', 'Health' ];
 
          function drawDChart() {
@@ -61,9 +61,24 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                }
 
                vm.showDonut = function(){
+                   var key = undefined;
+                   var tupleKey = undefined;
+                   if(vm.userSelectedTimeFactor !== undefined){
+                       key = vm.userSelectedTimeFactor;
+                       if (key === 'Free Time') {
+                           tupleKey = 'freetime';
+                       } else if (key === 'Going Out') {
+                           tupleKey = 'goout';
+                       } else if (key === 'Study Time') {
+                           tupleKey = 'studytime';
+                       }else if (key === 'Travel Time') {
+                           tupleKey = 'traveltime';
+                       }
+                   }
 
 
-                       GradeDist.get({colName: vm.userSelectedTimeFactor, colValue: vm.userSelectedTimeScale}).$promise.then(function (response) {
+
+                       GradeDist.get({colName: tupleKey, colValue: vm.userSelectedTimeScale}).$promise.then(function (response) {
                            vm.DonutObj = response;
                            console.log('SUCCESS GradeDist.get:', response);
 
@@ -178,6 +193,16 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                                     tupleKey = 'Walc';
                                 }else if (key === 'Health') {
                                     tupleKey = 'health';
+                                }else if (key === 'Study Time') {
+                                    tupleKey = 'studytime';
+                                }else if (key === 'Travel Time') {
+                                    tupleKey = 'traveltime';
+                                } else if (key === 'Going Out') {
+                                    tupleKey = 'goout';
+                                } else if (key === 'Study Time') {
+                                    tupleKey = 'studytime';
+                                }else if (key === 'Travel Time') {
+                                    tupleKey = 'traveltime';
                                 }
 
                 vm.loadingStats = true;

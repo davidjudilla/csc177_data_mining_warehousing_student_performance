@@ -25,7 +25,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.multY = 1;
             vm.multX = 5;
 
-            vm.barGraphTuples = ["Students Age", 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
+            vm.barGraphTuples = ["Student's Age", 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Going Out',
                                  'Daily Alcohol Consumption', 'Weekly Alcohol Consumption', 'Health' ];
 
             function setData(){
@@ -103,7 +103,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 var tupleKey = undefined;
                                 if(key === 'Family Size'){
                                     tupleKey = 'famsize';
-                                }else if (key === "Students Age") {
+                                }else if (key === "Student's Age") {
                                     tupleKey = 'age';
                                 }else if (key === 'Absences') {
                                     tupleKey = 'absences';

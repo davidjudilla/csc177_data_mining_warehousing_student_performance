@@ -48,7 +48,7 @@
                 <button class="btn btn-success" ng-click="ctrl.showLineGraph()">Submit</button>
                 <h4>Description of Y-axis:</h4>
                 <div ng-switch on="ctrl.graphNiceDescription">
-                  <div ng-switch-when="Students Age">
+                  <div ng-switch-when="Student's Age">
                     <span>Student's age (numeric: from 15 to 22).</span>
                   </div>
                   <div ng-switch-when="Absences">
@@ -65,6 +65,9 @@
                   </div>
                   <div ng-switch-when="Weekly Alcohol Consumption">
                     <span>Weekend alcohol consumption (numeric: from 1 - very low to 5 - very high).</span>
+                  </div>
+                  <div ng-switch-when="Health">
+                    <span>Current health status (numeric: from 1 - very bad to 5 - very good)</span>
                   </div>
                 </div>
             </div>

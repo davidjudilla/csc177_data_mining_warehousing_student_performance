@@ -148,7 +148,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 vm.currentLineObj[3] = (vm.currentLineObj[2]+vm.currentLineObj[4])/2;
 
               var options = {
-                  title: 'Average grade for '+ '"' + vm.graphNiceDescription + '" ' + 'among students with X amount of failures during the school year',
+                  title: 'Average grade for '+ '"' + vm.graphNiceDescription + '" ',
                   curveType: 'function',
                   legend: { position: 'top-right' },
                   hAxis: {

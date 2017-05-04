@@ -39,7 +39,6 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
 
          function drawDChart() {
 
-
                  var data = google.visualization.arrayToDataTable([
                    ['Grade', 'How many recieved'],
                    ['Poor',     vm.gradeArray[0]+vm.gradeArray[1]+vm.gradeArray[2]],
@@ -84,6 +83,8 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                        GradeDist.get({colName: vm.tkey, colValue: vm.userSelectedTimeScale}).$promise.then(function (response) {
                            vm.DonutObj = response;
                            console.log('SUCCESS GradeDist.get:', response);
+                           
+                           vm.gradeArray =[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,];
 
                            vm.DonutObj.forEach(function(element, index){
                                if(element === 0){ //if the grade is 0, then count grade 0 ++

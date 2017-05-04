@@ -3,3 +3,4 @@ student/
 .DS_Store
 .RData
 .Rhistory
+server/server.pyc

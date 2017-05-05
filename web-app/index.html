@@ -48,7 +48,7 @@
                 <button class="btn btn-success" ng-click="ctrl.showLineGraph()">Submit</button>
                 <h4>Description of Y-axis:</h4>
                 <div ng-switch on="ctrl.graphNiceDescription">
-                  <div ng-switch-when="Students Age">
+                  <div ng-switch-when="Age">
                     <span>Student's age (numeric: from 15 to 22).</span>
                   </div>
                   <div ng-switch-when="Absences">
@@ -65,6 +65,18 @@
                   </div>
                   <div ng-switch-when="Weekly Alcohol Consumption">
                     <span>Weekend alcohol consumption (numeric: from 1 - very low to 5 - very high).</span>
+                  </div>
+                  <div ng-switch-when="Free Time">
+                    <span>Free time after school (numeric: from 1 - very low to 5 - very high).</span>
+                  </div>
+                  <div ng-switch-when="Travel Time">
+                    <span>home to school travel time (numeric: 1 - <15 min., 2 - 15 to 30 min., 3 - 30 min. to 1 hour, or 4 - >1 hour).</span>
+                  </div>
+                  <div ng-switch-when="Going Out">
+                    <span>Going out with friends (numeric: from 1 - very low to 5 - very high).</span>
+                  </div>
+                  <div ng-switch-when="Health">
+                    <span>Current health status (numeric: from 1 - very bad to 5 - very good).</span>
                   </div>
                 </div>
             </div>
@@ -89,7 +101,7 @@
                     </label>
                     <select name="dropdown2" id="dropdown2" class="form-control"
                             ng-model="ctrl.usrSelGradePer">
-                        <option ng-repeat="gp in ctrl.gradePercentages" value="{{gp}}">{{gp}}</option>
+                        <option ng-repeat="gp in ctrl.gradePercentages" value="{{gp}}">{{gp}}% {{ctrl.getMeaningPercentage(gp)}}</option>
                     </select>
                 </div>
                 <button class="btn btn-success" ng-click="ctrl.showStats()">Submit</button>
@@ -183,13 +195,16 @@
                     </div>
             </div>
         </div><!-- end stats row-->
+        <div><!-- hr won't work without a wrapping div-->
+            <hr>
+        </div>
         <div class="row">
             <!--left||top-->
             <div class="row-xs-4 row-sm-4 row-md-4 col-lg-2">
                 <h3>Donut Chart</h3>
                 <div class="form-group">
                     <label for="dropdown1">
-                        Choose a time factor and selet a rage to see grade distrubution.
+                        Choose a time factor and selet a range to see grade distrubution.
                     </label>
 
                     <select name="dropdown3" id="dropdown3" class="form-control"

@@ -34,7 +34,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             vm.multX = 5;
             vm.gradeArray =[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,];
 
-            vm.barGraphTuples = ["Students Age", 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Travel Time', 'Going Out',
+            vm.barGraphTuples = ["Age", 'Absences', 'Failures', 'Family Relationship', 'Free Time', 'Travel Time', 'Going Out',
                                  'Daily Alcohol Consumption', 'Weekly Alcohol Consumption', 'Health' ];
 
          function drawDChart() {
@@ -83,7 +83,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                        GradeDist.get({colName: vm.tkey, colValue: vm.userSelectedTimeScale}).$promise.then(function (response) {
                            vm.DonutObj = response;
                            console.log('SUCCESS GradeDist.get:', response);
-                           
+
                            vm.gradeArray =[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,];
 
                            vm.DonutObj.forEach(function(element, index){
@@ -179,7 +179,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 var tupleKey = undefined;
                                 if(key === 'Family Size'){
                                     tupleKey = 'famsize';
-                                }else if (key === "Students Age") {
+                                }else if (key === "Age") {
                                     tupleKey = 'age';
                                 }else if (key === 'Absences') {
                                     tupleKey = 'absences';
@@ -322,7 +322,7 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
             };
 
             vm.getScale = function(tuple){
-              if (tuple == "Student's Age" ){
+              if (tuple == "Age" ){
                 return "student's age (numeric: from 15 to 22)"
               }
             };
@@ -354,6 +354,24 @@ angular.module('studentPerformance', ['angularCharts','ngResource'])
                 return "(Greater than 1 hour)"
               } else if (tuple < 0){
                 return "(Error: negative value)"
+              } else{
+                // return "Testing"
+              }
+            };
+
+            vm.getMeaningPercentage = function(grade){
+              if (grade == 0){
+                return "Poor"
+              } else if (grade == 20){
+                return "Weak"
+              } else if (grade == 40){
+                return "Sufficient"
+              } else if (grade == 60){
+                return "Good"
+              }else if (grade == 80){
+                return "Very Good"
+              } else if (grade == 100){
+                return "Excellent"
               } else{
                 // return "Testing"
               }
